@@ -1,0 +1,131 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+UserManage
+{% endblock %}
+
+
+{% block css %}
+
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="opt-area clearfix">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                    Add
+                </h3>
+            </div>
+            <div class="panel-body">
+                <form class="form-inline" method="post" novalidate action="/manage/user/add/">
+                    {% csrf_token %}
+                    {% for field in form %}
+                    {{ field }}
+                    {% endfor %}
+                    <button type="submit" class="btn btn-success" style="float: right">
+                        <i class="fa fa-save" aria-hidden="true"></i>
+                        Save
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="user-area table-area" style="margin-top: 5px;">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+                    User Data
+                </h3>
+            </div>
+            <table class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Username</th>
+                    <th>Password</th>
+                    <th>Phone</th>
+                    <th>InvestAge</th>
+                    <th>Asset(USD)</th>
+                    <th>CreateTime</th>
+                    <th>RT</th>
+                    <th>Operate</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for item in userdata %}
+                {% if modid == item.id %}
+                <tr>
+                    <form class="form-inline" method="post" novalidate action="/manage/user/mod/">
+                        {% csrf_token %}
+                        <input type="text" style="display: none" name="id" value={{item.id}}>
+                        <th scope="row">{{ item.id }}</th>
+                        <td>{{ modform.username }}</td>
+                        <td>{{ modform.password }}</td>
+                        <td>{{ modform.phone }}</td>
+                        <td>{{ modform.investage }}</td>
+                        <td>{{ modform.asset }}</td>
+                        <td>{{ item.createtime|date:"Y-m-d" }}</td>
+                        <td>{{ modform.risktolerance }}</td>
+                        <td>
+                            <button type="submit" class="btn btn-success btn-xs">
+                                <i class="fa fa-save" aria-hidden="true"></i>
+                                Save
+                            </button>
+
+                        </td>
+                    </form>
+                </tr>
+                {% else %}
+                <tr>
+                    <th scope="row">{{ item.id }}</th>
+                    <td>{{ item.username }}</td>
+                    <td>{{ item.password }}</td>
+                    <td>{{ item.phone }}</td>
+                    <td>{{ item.investage }}</td>
+                    <td>{{ item.asset }}</td>
+                    <td>{{ item.createtime|date:"Y-m-d" }}</td>
+                    <td>{{ item.risktolerance }}</td>
+                    <td>
+                        <div style="display: inline-block">
+                            <form method="post">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-xs btn-primary" name="modid"
+                                        value="{{ item.id }}">
+                                    <i class="fa fa-wrench" aria-hidden="true"></i>
+                                    Mod
+                                </button>
+                            </form>
+                        </div>
+                        <div style="display: inline-block">
+                            <form method="post">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-xs delete btn-danger" name="delid"
+                                        value="{{ item.id }}">
+                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                    Del
+                                </button>
+                            </form>
+                        </div>
+                    </td>
+
+                    {% endif %}
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>
+{% endblock %}
+
+{% block js %}
+$(function () {
+//禁用“确认重新提交表单”
+window.history.replaceState(null, null, window.location.href);
+})
+{% endblock %}

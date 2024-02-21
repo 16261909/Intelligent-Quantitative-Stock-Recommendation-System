@@ -1,0 +1,42 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+Home
+{% endblock %}
+
+{% block css %}
+        .navbar {
+        margin-bottom: 0;
+    }
+        .home {
+        background-image: url("../static/img/4.jpg");
+        background-attachment: fixed;
+        background-size: 100%;
+    }
+        .title {
+        margin-top: 200px;
+        text-align: center;
+        font-size: 90px;
+        color: white;
+        text-shadow: 15px 15px 20px black;
+    }
+
+{% endblock %}
+
+{% block content %}
+<body class="home">
+<div class="container">
+    <p class="title">
+        Welcome to the Intelligent Quantitative Stock Recommendation System
+    </p>
+</div>
+</body>
+{% endblock %}
+
+
+{% block js %}
+$(function () {
+//禁用“确认重新提交表单”
+window.history.replaceState(null, null, window.location.href);
+})
+{% endblock %}

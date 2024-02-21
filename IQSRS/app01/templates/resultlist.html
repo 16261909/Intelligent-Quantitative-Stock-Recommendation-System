@@ -1,0 +1,61 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+My Backtest
+{% endblock %}
+
+{% block css %}
+
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="user-area table-area" style="margin-top: 5px;">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+                    Backtest Data
+                </h3>
+            </div>
+            <table class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>StartTime</th>
+                    <th>EndTime</th>
+                    <th>Return</th>
+                    <th>Alpha</th>
+                    <th>Sharpe</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for item in result %}
+                <tr>
+                    <th scope="row">
+                        <a href="/result/?id={{item.id}}">
+                            {{ item.id }}</th>
+                        </a>
+                    </th>
+                    <th>{{item.paraid.starttime}}</th>
+                    <th>{{item.paraid.endtime}}</th>
+                    <th>{{item.ret}}</th>
+                    <th>{{item.alpha}}</th>
+                    <th>{{item.sharpe}}</th>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>
+{% endblock %}
+
+
+{% block js %}
+$(function () {
+//禁用“确认重新提交表单”
+window.history.replaceState(null, null, window.location.href);
+})
+{% endblock %}

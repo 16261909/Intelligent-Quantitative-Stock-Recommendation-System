@@ -1,0 +1,80 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+Stock List
+{% endblock %}
+
+{% block css %}
+
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="opt-area clearfix">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    <i class="fa fa-cubes" aria-hidden="true"></i>
+                    Search
+                </h3>
+            </div>
+            <div class="panel-body">
+                <form class="form-inline" novalidate method="GET" action="/stock/">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search" name="ticker">
+                    </div>
+                    <button type="submit" class="btn btn-default">
+                        <i class="fa fa-search" aria-hidden="true"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="user-area table-area" style="margin-top: 5px;">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title clearfix">
+                    <div class="col-md-11" style="padding:0;">
+                        <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+                        Stock Data
+                    </div>
+                </h3>
+            </div>
+            <table class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Ticker</th>
+                    <th>PE</th>
+                    <th>MarketCap</th>
+                    <th>Beta</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for item in stockdata %}
+                <tr>
+                    <th scope="row">{{ item.id }}</th>
+                    <th>
+                        <a href="/stock/?ticker={{item.ticker}}">
+                            {{item.ticker}}
+                        </a>
+                    </th>
+                    <td>{{ item.pe }}</td>
+                    <td>{{ item.marketcap }}</td>
+                    <td>{{ item.beta }}</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+{% block js %}
+$(function () {
+//禁用“确认重新提交表单”
+window.history.replaceState(null, null, window.location.href);
+})
+{% endblock %}
